@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost;database=asset-manager;integratedSecurity=false;Encrypt=True;TrustServerCertificate=True;
+    username: sa
+    password: VeryStr0ngP@ssw0rd
+
+
+
+
+  # The SQL dialect makes Hibernate generate better SQL for the chosen database
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+
+  #JPA Settings
+  jpa.hibernate.ddl_auto: update
+  sql:
+    init:
+      platform: mssql
