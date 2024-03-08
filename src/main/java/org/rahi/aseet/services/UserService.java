@@ -1,6 +1,6 @@
 package org.rahi.aseet.services;
 
-import org.rahi.aseet.Entities.Users;
+import org.rahi.aseet.Entities.User;
 import org.rahi.aseet.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,17 +19,17 @@ public class UserService implements IUsersService, UserDetailsService {
     private IUserRepository iUserRepository;
 
     @Override
-    public List<Users> getUser() {
+    public List<User> getUser() {
         return iUserRepository.findAll();
     }
 
     @Override
-    public Users saveUser(Users user) {
+    public User saveUser(User user) {
         return iUserRepository.save(user);
     }
 
     @Override
-    public Users getUser(UUID userId) throws Exception {
+    public User getUser(UUID userId) throws Exception {
         var userDetails = iUserRepository.findById(userId);
         if(userDetails.isEmpty()){
             throw new Exception("User not found");
@@ -41,15 +41,15 @@ public class UserService implements IUsersService, UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Users user = iUserRepository.findByEmail(username)
+        User user = iUserRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
         return UserDetailsImpl.build(user);
     }
 
     @Override
-    public Users updateUser(UUID userId, Users user) throws Exception {
-        Users userData = getUser(userId);
+    public User updateUser(UUID userId, User user) throws Exception {
+        User userData = getUser(userId);
         userData.setEmail(user.getEmail());
         userData.setName(user.getName());
         iUserRepository.save(userData);

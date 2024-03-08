@@ -2,7 +2,7 @@ package org.rahi.aseet.controllers;
 
 
 import jakarta.validation.Valid;
-import org.rahi.aseet.Entities.Users;
+import org.rahi.aseet.Entities.User;
 import org.rahi.aseet.payload.request.LoginRequest;
 import org.rahi.aseet.payload.response.JwtResponse;
 import org.rahi.aseet.security.JwtUtils;
@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/auth")
 public class AuthController {
 
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -37,18 +38,13 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @Autowired
-    AuthController(UserService iUsersService){
-        userService = iUsersService;
-    }
-
     @GetMapping()
     public String index(){
         return "Hello";
     }
 
     @GetMapping("user/{userId}")
-    public Users getUser(@PathVariable UUID userId) throws Exception {
+    public User getUser(@PathVariable UUID userId) throws Exception {
         return userService.getUser(userId);
     }
 
@@ -74,7 +70,7 @@ public class AuthController {
     }
 
     @PostMapping("sign-up")
-    public Users saveUser(@Valid @ModelAttribute Users userModel){
+    public User saveUser(@Valid @ModelAttribute User userModel){
         userModel.setPassword(encoder.encode(userModel.getPassword()));
         return userService.saveUser(userModel);
     }

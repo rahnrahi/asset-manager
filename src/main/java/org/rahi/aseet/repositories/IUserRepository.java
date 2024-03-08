@@ -1,6 +1,6 @@
 package org.rahi.aseet.repositories;
 
-import org.rahi.aseet.Entities.Users;
+import org.rahi.aseet.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,9 +10,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface IUserRepository extends JpaRepository<Users, UUID> {
+public interface IUserRepository extends JpaRepository<User, UUID> {
 
-    Optional<Users> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
     Boolean existsByEmail(String email);
 
@@ -21,5 +21,5 @@ public interface IUserRepository extends JpaRepository<Users, UUID> {
                     "WHERE lower(e.email) LIKE lower(concat('%', :email, '%')) " +
                     "AND e.password = :password "
     )
-    Optional<Users> loginUser(@Param("email") String email, @Param("password") String password);
+    Optional<User> loginUser(@Param("email") String email, @Param("password") String password);
 }

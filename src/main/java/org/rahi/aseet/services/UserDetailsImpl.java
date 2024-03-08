@@ -2,13 +2,10 @@ package org.rahi.aseet.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import org.rahi.aseet.Entities.Users;
-import org.springframework.context.annotation.Bean;
+import org.rahi.aseet.Entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.Serial;
 import java.util.*;
@@ -39,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(Users user) {
+    public static UserDetailsImpl build(User user) {
         var authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_user"));
 //        List<GrantedAuthority> authorities = authorities;

@@ -15,15 +15,11 @@ import java.util.UUID;
 @Entity(name = "AssetUser")
 @Data
 @EqualsAndHashCode(callSuper=false, of = "userId")
-public class Users extends BaseEntity {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID userId;
-
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String token;
-
 
     @JsonProperty("full_name")
     @NotBlank(message = "Name is mandatory")
@@ -35,9 +31,6 @@ public class Users extends BaseEntity {
 
     @NotBlank(message = "Password is mandatory")
     private String password;
-
-    @JdbcTypeCode(SqlTypes.VARCHAR)
-    private String passwordSalt;
 
 
 }
