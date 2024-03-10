@@ -1,6 +1,7 @@
 package org.rahi.aseet.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Entity(name = "AssetNode")
 @Data
 @EqualsAndHashCode(callSuper=false, of = "assetId")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AssetNode extends BaseEntity {
     @Id
     @GeneratedValue
@@ -37,7 +39,7 @@ public class AssetNode extends BaseEntity {
 
     @JsonIgnore
     public List<AssetNode> getChildren() {
-        return children;
+        return children.stream().toList();
     }
 
 }

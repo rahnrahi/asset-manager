@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface IAssetNode  extends JpaRepository<AssetNode, UUID> {
-    @Query(value = "select n from AssetNode n inner join n.parentNode p where p.assetId = :parentId")
+    @Query(value = "select n from AssetNode n left join n.parentNode p where p.assetId = :parentId")
     List<AssetNode> findNodesByParentId(UUID parentId);
 
 }
