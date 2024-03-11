@@ -1,15 +1,16 @@
 package org.rahi.aseet.services;
 
-import org.rahi.aseet.Entities.User;
+import org.rahi.aseet.Entities.UserAccountEntity;
+import org.rahi.aseet.payload.request.SignUpRequest;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IUsersService {
-    List<User> getUser();
-    User saveUser(User user);
-    User getUser(UUID userId) throws Exception;
-    User updateUser(UUID userId, User user) throws Exception;
+    List<UserAccountEntity> getUser();
+    UserAccountEntity saveUser(SignUpRequest user);
+    UserAccountEntity getUser(UUID userId) throws Exception;
+    UserAccountEntity updateUser(UUID userId, UserAccountEntity user) throws Exception;
     String deleteUser(UUID userId);
 
 }

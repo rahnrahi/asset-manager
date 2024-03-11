@@ -2,13 +2,14 @@ package org.rahi.aseet.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import org.rahi.aseet.Entities.User;
+import org.rahi.aseet.Entities.UserAccountEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
     @Serial
@@ -36,10 +37,10 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
-        var authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_user"));
-//        List<GrantedAuthority> authorities = authorities;
+    public static UserDetailsImpl build(UserAccountEntity user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .collect(Collectors.toList());
 
         return new UserDetailsImpl(
                 user.getUserId(),

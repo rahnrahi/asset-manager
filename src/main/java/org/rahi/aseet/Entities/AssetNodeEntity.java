@@ -18,28 +18,33 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(callSuper=false, of = "assetId")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class AssetNode extends BaseEntity {
+public class AssetNodeEntity extends BaseEntity {
     @Id
     @GeneratedValue
     @JdbcTypeCode(SqlTypes.VARCHAR)
     private UUID assetId;
 
     @NotNull
+    @Column(unique=true)
     private String name;
 
     private int level = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private AssetNode parentNode;
+    private AssetNodeEntity parentNode;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "parentNode")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Setter
-    private List<AssetNode> children;
+    private List<AssetNodeEntity> children;
 
     @JsonIgnore
-    public List<AssetNode> getChildren() {
+    public List<AssetNodeEntity> getChildren() {
         return children.stream().toList();
     }
+
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "assetNodes")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    List<ProductEntity> products;
 
 }

@@ -2,7 +2,6 @@ package org.rahi.aseet.controllers;
 
 
 import jakarta.validation.Valid;
-import org.rahi.aseet.Entities.AssetNode;
 import org.rahi.aseet.payload.request.AssetRequest;
 import org.rahi.aseet.payload.response.AssetResponse;
 import org.rahi.aseet.services.AssetNodeService;

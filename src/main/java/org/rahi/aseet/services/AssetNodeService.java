@@ -1,9 +1,9 @@
 package org.rahi.aseet.services;
 
-import org.rahi.aseet.Entities.AssetNode;
+import org.rahi.aseet.Entities.AssetNodeEntity;
 import org.rahi.aseet.payload.request.AssetRequest;
 import org.rahi.aseet.payload.response.AssetResponse;
-import org.rahi.aseet.repositories.IAssetNode;
+import org.rahi.aseet.repositories.AssetNodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +15,10 @@ import java.util.UUID;
 public class AssetNodeService implements IAssetNodeService{
 
 
-    IAssetNode _iassetNoderepo;
+    AssetNodeRepository _iassetNoderepo;
 
     @Autowired
-    AssetNodeService(IAssetNode iAssetNode){
+    AssetNodeService(AssetNodeRepository iAssetNode){
         _iassetNoderepo = iAssetNode;
     }
 
@@ -30,9 +30,9 @@ public class AssetNodeService implements IAssetNodeService{
     @Override
     public List<AssetResponse> getNodesbyParentId(UUID parentId) {
 
-        List<AssetNode> items =  _iassetNoderepo.findNodesByParentId(parentId).stream().toList();
+        List<AssetNodeEntity> items =  _iassetNoderepo.findNodesByParentId(parentId).stream().toList();
         List<AssetResponse> assetResponseList = new java.util.ArrayList<>(Collections.emptyList());
-        for (AssetNode item : items){
+        for (AssetNodeEntity item : items){
             assetResponseList.add(new AssetResponse(
                     item.getName(),
                     item.getParentNode().getAssetId(),
@@ -49,8 +49,8 @@ public class AssetNodeService implements IAssetNodeService{
      */
     @Override
     public AssetResponse saveAsset(AssetRequest nodedata) throws Exception {
-      AssetNode parentNode = getNodeById(nodedata.getParentId());
-      AssetNode newAsset = new AssetNode();
+      AssetNodeEntity parentNode = getNodeById(nodedata.getParentId());
+      AssetNodeEntity newAsset = new AssetNodeEntity();
         return getAssetResponse(nodedata, parentNode, newAsset);
     }
 
@@ -59,15 +59,15 @@ public class AssetNodeService implements IAssetNodeService{
      */
     @Override
     public AssetResponse updateAsset(AssetRequest nodedata, UUID assetId) throws Exception {
-        AssetNode parentNode = getNodeById(nodedata.getParentId());
-        AssetNode newAsset = getNodeById(assetId);
+        AssetNodeEntity parentNode = getNodeById(nodedata.getParentId());
+        AssetNodeEntity newAsset = getNodeById(assetId);
         if(parentNode==null){
             parentNode = newAsset.getParentNode();
         }
         return getAssetResponse(nodedata, parentNode, newAsset);
     }
 
-    private AssetResponse getAssetResponse(AssetRequest nodedata, AssetNode parentNode, AssetNode newAsset) {
+    private AssetResponse getAssetResponse(AssetRequest nodedata, AssetNodeEntity parentNode, AssetNodeEntity newAsset) {
         newAsset.setName(nodedata.getName());
 
         if(parentNode==null){
@@ -76,7 +76,7 @@ public class AssetNodeService implements IAssetNodeService{
             newAsset.setLevel(parentNode.getLevel()+1);
             newAsset.setParentNode(parentNode);
         }
-        AssetNode assetNode =  _iassetNoderepo.save(newAsset);
+        AssetNodeEntity assetNode =  _iassetNoderepo.save(newAsset);
         return  new AssetResponse(
                 assetNode.getName(),
                 assetNode.getParentNode().getAssetId(),
@@ -85,7 +85,7 @@ public class AssetNodeService implements IAssetNodeService{
         );
     }
 
-    private AssetNode getNodeById(UUID assetId) throws Exception {
+    private AssetNodeEntity getNodeById(UUID assetId) throws Exception {
         if(assetId==null){
             return null;
         }
