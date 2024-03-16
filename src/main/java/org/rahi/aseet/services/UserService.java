@@ -24,6 +24,7 @@ public class UserService implements IUsersService, UserDetailsService {
     @Autowired
     private UserRepository iUserRepository;
 
+    @Autowired
     private RoleRepository roleRepository;
 
     @Override
@@ -33,7 +34,7 @@ public class UserService implements IUsersService, UserDetailsService {
 
     @Override
     public UserAccountEntity saveUser(SignUpRequest signUpRequest) {
-        Set<String> strRoles = signUpRequest.getRole();
+        List<String> strRoles = signUpRequest.getRole();
         Set<RoleEntity> roles = new HashSet<>();
         if (strRoles == null) {
             RoleEntity userRole = roleRepository.findByName(RoleTypes.ROLE_CUSTOMER)

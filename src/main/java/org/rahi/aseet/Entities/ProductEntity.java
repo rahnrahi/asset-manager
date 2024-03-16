@@ -8,10 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.type.SqlTypes;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -32,9 +30,12 @@ public class ProductEntity extends BaseEntity{
     @Column(length = 500)
     private String summery;
 
-    @NotNull
     @Column(length = 2000)
     private String content;
+
+    @ManyToOne
+    @NotNull
+    private UserAccountEntity addedBy;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

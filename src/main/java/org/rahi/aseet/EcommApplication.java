@@ -1,5 +1,6 @@
 package org.rahi.aseet;
 
+import org.rahi.aseet.Entities.seeds.SeedProductCategories;
 import org.rahi.aseet.Entities.seeds.SeedUsers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,6 +14,9 @@ public class EcommApplication {
     @Autowired
     private SeedUsers seedUsers;
 
+    @Autowired
+    private SeedProductCategories seedProductCategories;
+
     public static void main(String[] args) {
         SpringApplication.run(EcommApplication.class, args);
     }
@@ -21,6 +25,7 @@ public class EcommApplication {
     CommandLineRunner commandLineRunner(){
         return args -> {
             seedUsers.generateAccounts();
+            seedProductCategories.addAssets();
         };
     }
 
