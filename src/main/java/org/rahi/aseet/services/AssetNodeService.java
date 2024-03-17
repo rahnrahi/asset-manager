@@ -4,6 +4,7 @@ import org.rahi.aseet.Entities.AssetNodeEntity;
 import org.rahi.aseet.payload.request.AssetRequest;
 import org.rahi.aseet.payload.response.AssetResponse;
 import org.rahi.aseet.repositories.AssetNodeRepository;
+import org.rahi.aseet.services.interfaces.IAssetNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class AssetNodeService implements IAssetNodeService{
+public class AssetNodeService implements IAssetNodeService {
 
 
     AssetNodeRepository _iassetNoderepo;

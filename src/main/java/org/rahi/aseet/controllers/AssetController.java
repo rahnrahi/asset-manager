@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import org.rahi.aseet.payload.request.AssetRequest;
 import org.rahi.aseet.payload.response.AssetResponse;
 import org.rahi.aseet.services.AssetNodeService;
-import org.rahi.aseet.services.IAssetNodeService;
+import org.rahi.aseet.services.interfaces.IAssetNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

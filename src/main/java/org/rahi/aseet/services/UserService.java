@@ -6,6 +6,7 @@ import org.rahi.aseet.Entities.types.RoleTypes;
 import org.rahi.aseet.payload.request.SignUpRequest;
 import org.rahi.aseet.repositories.RoleRepository;
 import org.rahi.aseet.repositories.UserRepository;
+import org.rahi.aseet.services.interfaces.IUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

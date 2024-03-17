@@ -7,6 +7,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +29,11 @@ public class GlobalExceptionHandler {
 
         response.put("error", errors);
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<String> handleException(FileStorageException exception, RedirectAttributes redirectAttributes)
+    {
+        return new ResponseEntity<String>(exception.getMsg(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -3,39 +3,47 @@ package org.rahi.aseet.controllers;
 
 import jakarta.validation.Valid;
 import org.rahi.aseet.Entities.ProductEntity;
+import org.rahi.aseet.Entities.ProductImagesEntity;
 import org.rahi.aseet.Entities.UserAccountEntity;
 import org.rahi.aseet.payload.request.AddProductRequest;
-import org.rahi.aseet.payload.request.AssetRequest;
-import org.rahi.aseet.payload.response.AssetResponse;
+import org.rahi.aseet.payload.request.UploadImageRequest;
 import org.rahi.aseet.repositories.UserRepository;
 import org.rahi.aseet.services.ProductService;
-import org.rahi.aseet.services.UserDetailsImpl;
+import org.rahi.aseet.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final IProductService productService;
+
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    ProductController(ProductService _productService, UserRepository _userRepository){
+        productService = _productService;
+        userRepository = _userRepository;
+    }
 
     @PostMapping("add-new")
     public ProductEntity addAsset(@Valid @ModelAttribute AddProductRequest addProductRequest) throws Exception {
         UserAccountEntity user = getUser();
 
         return productService.saveProduct(addProductRequest, user);
+    }
+
+    @PostMapping("add-image/{productId}")
+    public List<ProductImagesEntity> addImage(@Valid @ModelAttribute UploadImageRequest uploadImageRequest, @PathVariable UUID productId)
+    {
+        return productService.addImage(uploadImageRequest, productId);
     }
 
     private UserAccountEntity getUser() throws Exception {

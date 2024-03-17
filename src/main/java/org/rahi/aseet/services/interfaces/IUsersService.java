@@ -1,4 +1,4 @@
-package org.rahi.aseet.services;
+package org.rahi.aseet.services.interfaces;
 
 import org.rahi.aseet.Entities.UserAccountEntity;
 import org.rahi.aseet.payload.request.SignUpRequest;

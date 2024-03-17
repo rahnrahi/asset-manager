@@ -1,20 +1,19 @@
 package org.rahi.aseet.services;
 
-import org.rahi.aseet.Entities.AssetNodeEntity;
-import org.rahi.aseet.Entities.ProductEntity;
-import org.rahi.aseet.Entities.TagsEntity;
-import org.rahi.aseet.Entities.UserAccountEntity;
+import org.rahi.aseet.Entities.*;
 import org.rahi.aseet.payload.request.AddProductRequest;
+import org.rahi.aseet.payload.request.UploadImageRequest;
 import org.rahi.aseet.repositories.AssetNodeRepository;
 import org.rahi.aseet.repositories.ProductRepository;
 import org.rahi.aseet.repositories.TagsRepository;
+import org.rahi.aseet.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -24,6 +23,13 @@ public class ProductService {
 
     @Autowired
     private TagsRepository tagsRepository;
+
+    @Autowired
+    private ProductImageService productImageService;
+
+    public List<ProductImagesEntity> addImage(UploadImageRequest uploadImageRequest, UUID productId){
+        return productImageService.addImage(uploadImageRequest, productId);
+    }
 
     public ProductEntity saveProduct(AddProductRequest addProductRequest, UserAccountEntity user){
         try {

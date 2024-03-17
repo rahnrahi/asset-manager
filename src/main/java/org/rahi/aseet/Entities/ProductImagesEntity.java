@@ -1,11 +1,11 @@
 package org.rahi.aseet.Entities;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -13,22 +13,24 @@ import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
-@Entity(name = "ProductBrand")
+@Entity(name = "ProductImages")
 @Data
-@EqualsAndHashCode(callSuper=false, of = "brandId")
+@EqualsAndHashCode(callSuper=false, of = "productImageId")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class BrandEntity extends BaseEntity{
+public class ProductImagesEntity {
     @Id
     @GeneratedValue
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    private UUID brandId;
+    private UUID productImageId;
 
-    @NotNull
-    private String brandName;
+    private String imageName;
 
-    @Column(length = 500)
-    private String summery;
+    private String extension;
 
-    @Column(length = 2000)
-    private String content;
+    private long size;
+
+    @ManyToOne
+    private ProductEntity product;
+
+
 }

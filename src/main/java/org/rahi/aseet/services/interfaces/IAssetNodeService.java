@@ -1,4 +1,4 @@
-package org.rahi.aseet.services;
+package org.rahi.aseet.services.interfaces;
 
 import org.rahi.aseet.payload.request.AssetRequest;
 import org.rahi.aseet.payload.response.AssetResponse;
